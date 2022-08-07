@@ -12,6 +12,9 @@
 			"editor.suggest.insertMode": "replace",
 			"editor.tabSize": 2
 		},
+		"[svelte]": {
+			"editor.defaultFormatter": "svelte.svelte-vscode"
+		},
 		"editor.insertSpaces": true
 	}
 }

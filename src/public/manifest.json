@@ -1,0 +1,20 @@
+{
+  "name": "QR Code for Page Url",
+  "description": "Just generates QR Code for current tab url.",
+  "version": "0.1",
+  "manifest_version": 3,
+  "permissions": ["tabs"],
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": {
+        "16": "/assets/images/icon_16.png",
+        "64": "/assets/images/icon_64.png",
+        "128": "/assets/images/icon_128.png"
+      }
+  },
+  "icons": {
+    "16": "/assets/images/icon_16.png",
+    "64": "/assets/images/icon_64.png",
+    "128": "/assets/images/icon_128.png"
+  }
+}

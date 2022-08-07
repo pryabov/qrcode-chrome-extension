@@ -26,8 +26,8 @@ export default defineConfig({
     publicDir: 'dist2',
     rollupOptions: {
       input: {
-        popup: resolve(root, 'popup','popup.html'),
-        temp2: resolve(root, 'temp2','index.html'),
+        popup: resolve(root, 'popup','index.html'),
+        //temp2: resolve(root, 'temp2','index.html'),
       }
     }
   }

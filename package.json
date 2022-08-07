@@ -1,5 +1,5 @@
 {
-  "name": "stelte-temp",
+  "name": "vite-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.1",
-    "rollup-plugin-copy": "^3.4.0",
-    "svelte": "^3.49.0",
-    "vite": "^3.0.0"
+    "vite": "^3.0.0",
+    "@vitejs/plugin-react": "^2.0.0",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6"
   },
   "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "bootstrap": "^5.2.0",
     "qrious": "^4.0.2"
   }

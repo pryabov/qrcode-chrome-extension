@@ -1,5 +1,5 @@
 <script>
-import QRious from '../../../node_modules/qrious/dist/qrious.js'
+import QRious from '../../../node_modules/qrious/dist/qrious'
 
 window.addEventListener("load", function () {
     chrome.tabs.query({ active: true, currentWindow: true }).then((tab) => {

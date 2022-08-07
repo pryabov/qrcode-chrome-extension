@@ -9,6 +9,7 @@ const outDir = resolve(__dirname, 'dist')
 // https://vitejs.dev/config/
 export default defineConfig({
   root,
+  publicDir: 'public',
   plugins: [
     // https://www.npmjs.com/package/rollup-plugin-copy
     copy({
@@ -25,7 +26,7 @@ export default defineConfig({
     publicDir: 'dist2',
     rollupOptions: {
       input: {
-        temp: resolve(root, 'temp','index.html'),
+        popup: resolve(root, 'popup','popup.html'),
         temp2: resolve(root, 'temp2','index.html'),
       }
     }

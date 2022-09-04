@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import commonjs from '@rollup/plugin-commonjs';
 import react from '@vitejs/plugin-react'
 
 const root = resolve(__dirname, 'src')
@@ -9,10 +10,13 @@ const outDir = resolve(__dirname, 'dist')
 export default defineConfig({
   root,
   publicDir: 'public',
+  mode: 'development',
   plugins: [
+    commonjs(),
     react(),
   ],
   build: {
+    minify: false,
     outDir,
     emptyOutDir: true,
     rollupOptions: {

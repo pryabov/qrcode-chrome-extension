@@ -17,7 +17,8 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        popup: resolve(root, 'popup','index.html')
+        popup: resolve(root, 'popup','index.html'),
+        options: resolve(root, 'options','index.html'),
       }
     }
   }

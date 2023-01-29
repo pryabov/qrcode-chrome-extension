@@ -1,4 +1,4 @@
-import * as QRious from 'qrious';
+import QRious from 'qrious';
 
 import { useEffect } from "react";
 

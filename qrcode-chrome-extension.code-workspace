@@ -23,6 +23,9 @@
 		},
 		"cSpell.words": [
 			"originjs"
-		]
+		],
+		"github.copilot.advanced": {
+			"enabled": true
+		}
 	}
 }

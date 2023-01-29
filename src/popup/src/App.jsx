@@ -29,10 +29,29 @@ function App() {
 
   return (
     <div className="App">
-        <div style={{marginBottom:'10px', fontSize: '24px'}}>
-          Encoded Page Url:
+      <div className="container" style={{marginTop:'10px', marginBottom:'10px'}}>
+      <div className="row">
+          <div className="span8">
+            <p className="h1">QR Code:</p>
+          </div>
+          <div className="span4">
+            <button className="btn btn-primary" type="button">Preferences</button>
+          </div>
+      </div>
+      <div className="row">
+          <div className="span12">
+            <canvas id="qrcode_container"></canvas>
+          </div>
         </div>
-        <canvas id="qrcode_container"></canvas>
+        <div className="row">
+          <div className="span12">
+            <p className="h3">
+              Encoded Text:
+            </p>
+            <textarea id="qrcode_textArea" style={{width: '100%'}} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

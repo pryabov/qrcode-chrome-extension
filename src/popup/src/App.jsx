@@ -34,7 +34,7 @@ function App() {
           <div className="span8">
             <p className="h1">QR Code:</p>
           </div>
-          <div className="span4">
+          <div className="span4 d-none">
             <button className="btn btn-primary" type="button">Preferences</button>
           </div>
       </div>

@@ -13,16 +13,10 @@
 			"editor.tabSize": 2
 		},
 		"editor.insertSpaces": true,
-		"cSpell.customDictionaries": {
-			"custom-dictionary-workspace": {
-				"name": "custom-dictionary-workspace",
-				"path": "${workspaceFolder:qrcode-chrome-extension}/.cspell/custom-dictionary-workspace.txt",
-				"addWords": true,
-				"scope": "workspace"
-			}
-		},
 		"cSpell.words": [
-			"originjs"
+			"originjs",
+			"qrcode",
+			"qrious"
 		],
 		"github.copilot.advanced": {
 			"enabled": true

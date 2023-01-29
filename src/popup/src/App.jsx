@@ -11,7 +11,7 @@ function App() {
               var qr = new QRious({
                   element: document.getElementById('qrcode_container'),
                   value: tab[0].url,
-                  size: 300
+                  size: 250
               });
           }
       });
@@ -53,7 +53,7 @@ function App() {
         </div>
         <div className="row">
           <div className="span12">
-            <button className="btn btn-primary float-end" type="button">Reset to Page Url</button>
+            <button className="btn btn-primary btn-sm float-end" type="button">Reset to Page Url</button>
           </div>
         </div>
       </div>

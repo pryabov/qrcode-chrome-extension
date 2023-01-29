@@ -1,18 +1,22 @@
 import QRious from 'qrious';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  var qr;
+
   // This will run one time after the component mounts
   useEffect(() => {
+    console.log('Point Here');
+    qr = new QRious({element: document.getElementById('qrcode_container'), size: 250});
+
     const onPageLoad = () => {
       chrome.tabs.query({ active: true, currentWindow: true }).then((tab) => {
           if(tab && tab[0]) {
-              var qr = new QRious({
-                  element: document.getElementById('qrcode_container'),
-                  value: tab[0].url,
-                  size: 250
-              });
+              console.log('Point 1:' + tab[0].url);
+              setTimeout(() => {qr.value = tab[0].url;} , 0);
+
+              setText(tab[0].url);
           }
       });
     };
@@ -26,6 +30,24 @@ function App() {
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, []);
+
+  const [text, setText] = useState('');
+
+  const handleChange = (event) => {
+    // console.log('Point 2:' + event.target.value);
+
+    setText(event.target.value);
+    setTimeout(() => {qr.value = event.target.value;} , 0);
+  }
+
+  const handleClickRefreshButton = (event) => {
+    chrome.tabs.query({ active: true, currentWindow: true }).then((tab) => {
+      if(tab && tab[0]) {
+        setTimeout(() => {qr.value = tab[0].url;} , 0);
+        setText(tab[0].url);
+      }
+    });
+  }
 
   return (
     <div className="App">
@@ -48,12 +70,16 @@ function App() {
             <p className="h3">
               Encoded Text:
             </p>
-            <textarea id="qrcode_textArea" style={{width: '100%'}} />
+            <textarea
+              id="qrcode_textArea"
+              style={{width: '100%'}}
+              onChange={handleChange}
+              value={text} />
           </div>
         </div>
         <div className="row">
           <div className="span12">
-            <button className="btn btn-primary btn-sm float-end" type="button">Reset to Page Url</button>
+            <button className="btn btn-primary btn-sm float-end" type="button" onClick={handleClickRefreshButton}>Reset to Page Url</button>
           </div>
         </div>
       </div>

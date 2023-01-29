@@ -12,9 +12,12 @@ export default defineConfig({
   publicDir: 'public',
   mode: 'development',
   plugins: [
-    commonjs(),
+    commonjs(
+      
+    ),
     react(),
   ],
+
   build: {
     minify: false,
     outDir,

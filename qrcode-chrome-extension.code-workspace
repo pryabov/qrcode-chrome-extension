@@ -12,9 +12,17 @@
 			"editor.suggest.insertMode": "replace",
 			"editor.tabSize": 2
 		},
-		"[svelte]": {
-			"editor.defaultFormatter": "svelte.svelte-vscode"
+		"editor.insertSpaces": true,
+		"cSpell.customDictionaries": {
+			"custom-dictionary-workspace": {
+				"name": "custom-dictionary-workspace",
+				"path": "${workspaceFolder:qrcode-chrome-extension}/.cspell/custom-dictionary-workspace.txt",
+				"addWords": true,
+				"scope": "workspace"
+			}
 		},
-		"editor.insertSpaces": true
+		"cSpell.words": [
+			"originjs"
+		]
 	}
 }

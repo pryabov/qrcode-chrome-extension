@@ -51,6 +51,11 @@ function App() {
             <textarea id="qrcode_textArea" style={{width: '100%'}} />
           </div>
         </div>
+        <div className="row">
+          <div className="span12">
+            <button className="btn btn-primary float-end" type="button">Reset to Page Url</button>
+          </div>
+        </div>
       </div>
     </div>
   )

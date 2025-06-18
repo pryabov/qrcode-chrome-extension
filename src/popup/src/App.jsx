@@ -9,8 +9,8 @@ const MOCK_DATA = [
   'WiFi:T:WPA;S:MyNetwork;P:password123;H:false;'
 ];
 
-// QR code configuration
-const QR_CONFIG = {
+// Default QR code configuration
+const DEFAULT_QR_CONFIG = {
   width: 300,
   height: 300,
   dotsOptions: {
@@ -19,6 +19,14 @@ const QR_CONFIG = {
   },
   backgroundOptions: {
     color: "#e9ebee",
+  },
+  cornersSquareOptions: {
+    type: "square",
+    color: "#4267b2"
+  },
+  cornersDotOptions: {
+    type: "square",
+    color: "#4267b2"
   }
 };
 
@@ -26,13 +34,17 @@ function App() {
   const [originalData, setOriginalData] = useState(''); // Original content from page/mock
   const [currentData, setCurrentData] = useState(''); // Current content (editable)
   const [isExtensionMode, setIsExtensionMode] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  
+  // QR customization options
+  const [qrConfig, setQrConfig] = useState(DEFAULT_QR_CONFIG);
 
-  // Generate QR code with given data
+  // Generate QR code with current configuration
   const generateQRCode = (data) => {
     if (!data) return;
     
     const qrCode = new QRCodeStyling({
-      ...QR_CONFIG,
+      ...qrConfig,
       data: data
     });
     
@@ -40,6 +52,31 @@ function App() {
     if (container) {
       container.innerHTML = '';
       qrCode.append(container);
+    }
+  };
+
+  // Handle QR config changes
+  const updateQrConfig = (updates) => {
+    const newConfig = { ...qrConfig, ...updates };
+    setQrConfig(newConfig);
+    if (currentData) {
+      const qrCode = new QRCodeStyling({
+        ...newConfig,
+        data: currentData
+      });
+      const container = document.getElementById('qrcode_container');
+      if (container) {
+        container.innerHTML = '';
+        qrCode.append(container);
+      }
+    }
+  };
+
+  // Reset QR settings to default
+  const resetQrSettings = () => {
+    setQrConfig(DEFAULT_QR_CONFIG);
+    if (currentData) {
+      generateQRCode(currentData);
     }
   };
 
@@ -199,8 +236,137 @@ function App() {
           >
             {isExtensionMode ? 'Get Page URL' : 'New Sample'}
           </button>
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            style={{
+              padding: '6px 12px',
+              backgroundColor: showSettings ? '#28a745' : '#17a2b8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '12px'
+            }}
+          >
+            {showSettings ? 'Hide Settings' : 'Customize'}
+          </button>
         </div>
       </div>
+
+      {/* QR Customization Settings */}
+      {showSettings && (
+        <div style={{
+          marginBottom: '15px',
+          padding: '10px',
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '5px',
+          fontSize: '11px',
+          maxWidth: '300px',
+          margin: '0 auto 15px auto'
+        }}>
+          <h3 style={{ margin: '0 0 8px 0', fontSize: '13px', textAlign: 'center' }}>🎨 Customize</h3>
+          
+          {/* Colors Row */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
+                Dots:
+              </label>
+              <input
+                type="color"
+                value={qrConfig.dotsOptions.color}
+                onChange={(e) => updateQrConfig({
+                  dotsOptions: { ...qrConfig.dotsOptions, color: e.target.value },
+                  cornersSquareOptions: { ...qrConfig.cornersSquareOptions, color: e.target.value },
+                  cornersDotOptions: { ...qrConfig.cornersDotOptions, color: e.target.value }
+                })}
+                style={{ width: '100%', height: '24px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
+              />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
+                Background:
+              </label>
+              <input
+                type="color"
+                value={qrConfig.backgroundOptions.color}
+                onChange={(e) => updateQrConfig({
+                  backgroundOptions: { ...qrConfig.backgroundOptions, color: e.target.value }
+                })}
+                style={{ width: '100%', height: '24px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
+              />
+            </div>
+          </div>
+
+          {/* Styles Row */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
+                Dot Style:
+              </label>
+              <select
+                value={qrConfig.dotsOptions.type}
+                onChange={(e) => updateQrConfig({
+                  dotsOptions: { ...qrConfig.dotsOptions, type: e.target.value }
+                })}
+                style={{
+                  width: '100%',
+                  padding: '2px',
+                  border: '1px solid #ddd',
+                  borderRadius: '2px',
+                  fontSize: '10px'
+                }}
+              >
+                <option value="square">Square</option>
+                <option value="dots">Dots</option>
+                <option value="rounded">Rounded</option>
+                <option value="classy">Classy</option>
+                <option value="classy-rounded">Classy+</option>
+              </select>
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
+                Corners:
+              </label>
+              <select
+                value={qrConfig.cornersSquareOptions.type}
+                onChange={(e) => updateQrConfig({
+                  cornersSquareOptions: { ...qrConfig.cornersSquareOptions, type: e.target.value }
+                })}
+                style={{
+                  width: '100%',
+                  padding: '2px',
+                  border: '1px solid #ddd',
+                  borderRadius: '2px',
+                  fontSize: '10px'
+                }}
+              >
+                <option value="square">Square</option>
+                <option value="dot">Dot</option>
+                <option value="extra-rounded">Rounded</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Reset Button */}
+          <button
+            onClick={resetQrSettings}
+            style={{
+              width: '100%',
+              padding: '4px',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              fontSize: '10px'
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      )}
       
       <div id="qrcode_container" style={{ marginBottom: '15px' }} />
       

@@ -1,12 +1,14 @@
 {
-  "name": "vite-react",
+  "name": "qr-chrome-extension",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:prod": "node scripts/build-and-zip.js",
+    "preview": "vite preview",
+    "clean": "rimraf dist releases"
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
@@ -14,6 +16,8 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
+    "archiver": "^7.0.1",
+    "rimraf": "^6.0.1",
     "vite": "^6.3.5"
   },
   "dependencies": {

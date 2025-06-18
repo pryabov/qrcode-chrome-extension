@@ -10,20 +10,29 @@ const outDir = resolve(__dirname, 'dist')
 export default defineConfig({
   root,
   publicDir: 'public',
-  mode: 'development',
   plugins: [
     commonjs(),
     react(),
   ],
   build: {
-    minify: false,
     outDir,
     emptyOutDir: true,
+    minify: 'esbuild',
+    sourcemap: false,
     rollupOptions: {
       input: {
         popup: resolve(root, 'popup','index.html'),
         options: resolve(root, 'options','index.html'),
+      },
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     }
+  },
+  server: {
+    port: 5173,
+    open: true
   }
 })

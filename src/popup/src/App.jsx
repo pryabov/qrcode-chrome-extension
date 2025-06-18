@@ -35,6 +35,7 @@ function App() {
   const [currentData, setCurrentData] = useState(''); // Current content (editable)
   const [isExtensionMode, setIsExtensionMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [qrCodeInstance, setQrCodeInstance] = useState(null); // Store QR code instance for download
   
   // QR customization options
   const [qrConfig, setQrConfig] = useState(DEFAULT_QR_CONFIG);
@@ -52,6 +53,7 @@ function App() {
     if (container) {
       container.innerHTML = '';
       qrCode.append(container);
+      setQrCodeInstance(qrCode); // Store instance for download
     }
   };
 
@@ -68,8 +70,20 @@ function App() {
       if (container) {
         container.innerHTML = '';
         qrCode.append(container);
+        setQrCodeInstance(qrCode); // Store instance for download
       }
     }
+  };
+
+  // Download QR code
+  const downloadQRCode = (format = 'png') => {
+    if (!qrCodeInstance) return;
+    
+    const fileName = `qrcode-${Date.now()}`;
+    qrCodeInstance.download({
+      name: fileName,
+      extension: format
+    });
   };
 
   // Reset QR settings to default
@@ -165,30 +179,30 @@ function App() {
   }, []);
 
   return (
-    <div className="App" style={{ padding: '20px', textAlign: 'center' }}>
-      <h1 style={{ marginBottom: '10px', fontSize: '24px', fontWeight: 'bold' }}>
+    <div className="App" style={{ padding: '10px', textAlign: 'center' }}>
+      <h1 style={{ marginBottom: '5px', fontSize: '20px', fontWeight: 'bold', marginTop: '0' }}>
         QR Code Generator
       </h1>
       
       {!isExtensionMode && (
         <div style={{ 
-          marginBottom: '15px', 
-          padding: '10px', 
+          marginBottom: '10px', 
+          padding: '8px', 
           backgroundColor: '#fff3cd', 
           border: '1px solid #ffeaa7', 
           borderRadius: '5px',
-          fontSize: '14px'
+          fontSize: '12px'
         }}>
           🛠️ Development Mode - Using mock data
         </div>
       )}
       
-      <p style={{ marginBottom: '10px', fontSize: '16px', color: '#666' }}>
+      <p style={{ marginBottom: '8px', fontSize: '14px', color: '#666', margin: '0 0 8px 0' }}>
         {isExtensionMode ? 'Content to encode:' : 'Sample content:'}
       </p>
       
       {/* Editable content input */}
-      <div style={{ marginBottom: '15px' }}>
+      <div style={{ marginBottom: '10px' }}>
         <textarea
           value={currentData}
           onChange={handleDataChange}
@@ -197,16 +211,16 @@ function App() {
           style={{
             width: '100%',
             maxWidth: '300px',
-            padding: '8px 12px',
+            padding: '6px 10px',
             border: '1px solid #ddd',
             borderRadius: '4px',
             fontSize: '12px',
-            marginBottom: '8px',
+            marginBottom: '6px',
             resize: 'vertical',
             fontFamily: 'monospace'
           }}
         />
-        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
           <button
             onClick={handleReset}
             disabled={currentData === originalData}
@@ -256,19 +270,19 @@ function App() {
       {/* QR Customization Settings */}
       {showSettings && (
         <div style={{
-          marginBottom: '15px',
-          padding: '10px',
+          marginBottom: '10px',
+          padding: '8px',
           backgroundColor: '#f8f9fa',
           border: '1px solid #dee2e6',
           borderRadius: '5px',
           fontSize: '11px',
           maxWidth: '300px',
-          margin: '0 auto 15px auto'
+          margin: '0 auto 10px auto'
         }}>
-          <h3 style={{ margin: '0 0 8px 0', fontSize: '13px', textAlign: 'center' }}>🎨 Customize</h3>
+          <h3 style={{ margin: '0 0 6px 0', fontSize: '13px', textAlign: 'center' }}>🎨 Customize</h3>
           
           {/* Colors Row */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
                 Dots:
@@ -281,7 +295,7 @@ function App() {
                   cornersSquareOptions: { ...qrConfig.cornersSquareOptions, color: e.target.value },
                   cornersDotOptions: { ...qrConfig.cornersDotOptions, color: e.target.value }
                 })}
-                style={{ width: '100%', height: '24px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
+                style={{ width: '100%', height: '22px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
               />
             </div>
             <div style={{ flex: 1 }}>
@@ -294,13 +308,13 @@ function App() {
                 onChange={(e) => updateQrConfig({
                   backgroundOptions: { ...qrConfig.backgroundOptions, color: e.target.value }
                 })}
-                style={{ width: '100%', height: '24px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
+                style={{ width: '100%', height: '22px', cursor: 'pointer', border: 'none', borderRadius: '2px' }}
               />
             </div>
           </div>
 
           {/* Styles Row */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', marginBottom: '2px', fontWeight: 'bold', fontSize: '10px' }}>
                 Dot Style:
@@ -368,7 +382,64 @@ function App() {
         </div>
       )}
       
-      <div id="qrcode_container" style={{ marginBottom: '15px' }} />
+      <div id="qrcode_container" style={{ marginBottom: '10px' }} />
+      
+      {/* Download Options */}
+      {currentData && qrCodeInstance && (
+        <div style={{
+          marginBottom: '10px',
+          display: 'flex',
+          gap: '6px',
+          justifyContent: 'center',
+          flexWrap: 'wrap'
+        }}>
+          <button
+            onClick={() => downloadQRCode('png')}
+            style={{
+              padding: '4px 8px',
+              backgroundColor: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              fontSize: '10px',
+              fontWeight: 'bold'
+            }}
+          >
+            📥 PNG
+          </button>
+          <button
+            onClick={() => downloadQRCode('svg')}
+            style={{
+              padding: '4px 8px',
+              backgroundColor: '#17a2b8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              fontSize: '10px',
+              fontWeight: 'bold'
+            }}
+          >
+            📥 SVG
+          </button>
+          <button
+            onClick={() => downloadQRCode('jpeg')}
+            style={{
+              padding: '4px 8px',
+              backgroundColor: '#ffc107',
+              color: '#212529',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              fontSize: '10px',
+              fontWeight: 'bold'
+            }}
+          >
+            📥 JPG
+          </button>
+        </div>
+      )}
       
       {currentData && currentData !== originalData && (
         <div style={{ 

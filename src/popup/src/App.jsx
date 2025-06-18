@@ -1,5 +1,4 @@
 import QRious from 'qrious';
-
 import { useEffect } from "react";
 
 function App() {

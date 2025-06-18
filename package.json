@@ -10,16 +10,17 @@
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "@rollup/plugin-commonjs": "^24.0.1",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react-swc": "^3.0.1",
-    "vite": "^4.0.4"
+    "@rollup/plugin-commonjs": "24.0.1",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react-swc": "^3.10.2",
+    "vite": "^6.3.5"
   },
   "dependencies": {
-    "bootstrap": "^5.2.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.7",
     "qrious": "^4.0.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

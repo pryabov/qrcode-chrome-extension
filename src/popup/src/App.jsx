@@ -1,4 +1,4 @@
-import QRious from 'qrious';
+import QRCodeStyling from 'qr-code-styling';
 import { useEffect } from "react";
 
 function App() {
@@ -7,11 +7,25 @@ function App() {
     const onPageLoad = () => {
       chrome.tabs.query({ active: true, currentWindow: true }).then((tab) => {
           if(tab && tab[0]) {
-              var qr = new QRious({
-                  element: document.getElementById('qrcode_container'),
-                  value: tab[0].url,
-                  size: 300
+              const qrCode = new QRCodeStyling({
+                  width: 300,
+                  height: 300,
+                  data: tab[0].url,
+                  dotsOptions: {
+                      color: "#4267b2",
+                      type: "rounded"
+                  },
+                  backgroundOptions: {
+                      color: "#e9ebee",
+                  }
               });
+              
+              // Clear previous QR code if any
+              const container = document.getElementById('qrcode_container');
+              container.innerHTML = '';
+              
+              // Append the QR code to the container
+              qrCode.append(container);
           }
       });
     };
@@ -31,7 +45,7 @@ function App() {
         <div style={{marginBottom:'10px', fontSize: '24px'}}>
           Encoded Page Url:
         </div>
-        <canvas id="qrcode_container"></canvas>
+        <div id="qrcode_container"></div>
     </div>
   )
 }

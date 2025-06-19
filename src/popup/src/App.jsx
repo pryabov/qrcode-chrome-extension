@@ -136,7 +136,7 @@ function App() {
   };
 
   // Handle refresh button click
-  const handleRefresh = () => {
+  const handleReset = () => {
     if (isExtensionMode) {
       // In extension mode, get current tab URL again
       chrome.tabs.query({ active: true, currentWindow: true })
@@ -159,12 +159,6 @@ function App() {
       setCurrentData(mockData);
       generateQRCode(mockData);
     }
-  };
-
-  // Reset to original content
-  const handleReset = () => {
-    setCurrentData(originalData);
-    generateQRCode(originalData);
   };
 
   useEffect(() => {
@@ -226,7 +220,7 @@ function App() {
             disabled={currentData === originalData}
             style={{
               padding: '6px 12px',
-              backgroundColor: currentData === originalData ? '#ccc' : '#6c757d',
+              backgroundColor: currentData === originalData ? '#ccc' : '#4267b2',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
@@ -234,22 +228,9 @@ function App() {
               fontSize: '12px'
             }}
           >
-            Reset
-          </button>
-          <button
-            onClick={handleRefresh}
-            style={{
-              padding: '6px 12px',
-              backgroundColor: '#4267b2',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '12px'
-            }}
-          >
             {isExtensionMode ? 'Get Page URL' : 'New Sample'}
           </button>
+
           <button
             onClick={() => setShowSettings(!showSettings)}
             style={{

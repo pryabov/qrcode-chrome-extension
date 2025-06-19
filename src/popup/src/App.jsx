@@ -14,19 +14,19 @@ const DEFAULT_QR_CONFIG = {
   width: 300,
   height: 300,
   dotsOptions: {
-    color: "#4267b2",
-    type: "rounded"
+    color: "#000000",
+    type: "square"
   },
   backgroundOptions: {
-    color: "#e9ebee",
+    color: "#ffffff",
   },
   cornersSquareOptions: {
     type: "square",
-    color: "#4267b2"
+    color: "#000000"
   },
   cornersDotOptions: {
     type: "square",
-    color: "#4267b2"
+    color: "#000000"
   }
 };
 

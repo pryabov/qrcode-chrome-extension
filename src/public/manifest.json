@@ -1,7 +1,7 @@
 {
-  "name": "QR Code for Page Url",
-  "description": "Just generates QR Code for current tab url.",
-  "version": "0.1",
+  "name": "QR Code Customizable Generator",
+  "description": "Generates a QR code for the current tab’s URL or any custom text, with customizable settings.",
+  "version": "1.1.0",
   "manifest_version": 3,
   "permissions": ["tabs"],
   "action": {

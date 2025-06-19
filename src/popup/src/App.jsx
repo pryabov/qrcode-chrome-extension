@@ -44,8 +44,11 @@ function App() {
   const generateQRCode = (data) => {
     if (!data) return;
     
+    const qrSize = showSettings ? 200 : 300; // Smaller size when settings are shown
     const qrCode = new QRCodeStyling({
       ...qrConfig,
+      width: qrSize,
+      height: qrSize,
       data: data
     });
     
@@ -62,8 +65,11 @@ function App() {
     const newConfig = { ...qrConfig, ...updates };
     setQrConfig(newConfig);
     if (currentData) {
+      const qrSize = showSettings ? 200 : 300; // Smaller size when settings are shown
       const qrCode = new QRCodeStyling({
         ...newConfig,
+        width: qrSize,
+        height: qrSize,
         data: currentData
       });
       const container = document.getElementById('qrcode_container');
@@ -77,10 +83,18 @@ function App() {
 
   // Download QR code
   const downloadQRCode = (format = 'png') => {
-    if (!qrCodeInstance) return;
+    if (!currentData) return;
+    
+    // Create full-size version for download (always 512px regardless of display size)
+    const downloadQrCode = new QRCodeStyling({
+      ...qrConfig,
+      width: 512,
+      height: 512,
+      data: currentData
+    });
     
     const fileName = `qrcode-${Date.now()}`;
-    qrCodeInstance.download({
+    downloadQrCode.download({
       name: fileName,
       extension: format
     });
@@ -172,8 +186,23 @@ function App() {
     }
   }, []);
 
+  // Regenerate QR code when settings panel toggles (to update size)
+  useEffect(() => {
+    if (currentData) {
+      generateQRCode(currentData);
+    }
+  }, [showSettings]);
+
   return (
-    <div className="App" style={{ padding: '10px', textAlign: 'center' }}>
+    <div className="App" style={{ 
+      padding: '10px', 
+      textAlign: 'center',
+      width: '320px',
+      maxWidth: '320px',
+      minWidth: '320px',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       <h1 style={{ marginBottom: '5px', fontSize: '20px', fontWeight: 'bold', marginTop: '0' }}>
         QR Code Generator
       </h1>
